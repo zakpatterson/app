@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
 import * as Haptics from 'expo-haptics';
 
-import { Text, View } from './Themed';
+import { Text, View, Pressable } from './Themed';
 
 interface Props {
   items: string[];
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
   },
   tab: {
     borderRadius: 100,
-    backgroundColor: '#222',
     paddingHorizontal: 12,
     paddingVertical: 8,
   },

@@ -3,7 +3,13 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { Text as DefaultText, useColorScheme, View as DefaultView } from 'react-native';
+import {
+  Text as DefaultText,
+  useColorScheme,
+  View as DefaultView,
+  Pressable as DefaultPressable,
+  PressableProps as DefaultPressableProps,
+} from 'react-native';
 
 import Colors from '../constants/Colors';
 
@@ -28,12 +34,20 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
+export type PressableProps = ThemeProps & DefaultPressableProps;
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
+}
+
+export function Pressable(props: PressableProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raised');
+
+  return <DefaultPressable style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
