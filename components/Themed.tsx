@@ -34,7 +34,7 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
-export type PressableProps = ThemeProps & DefaultPressableProps;
+export type PressableProps = { level: 0 | 1 | 2 } & ThemeProps & DefaultPressableProps;
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -44,8 +44,8 @@ export function Text(props: TextProps) {
 }
 
 export function Pressable(props: PressableProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raised');
+  const { style, lightColor, darkColor, level, ...otherProps } = props;
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, `raised${level}`);
 
   return <DefaultPressable style={[{ backgroundColor }, style]} {...otherProps} />;
 }

@@ -29,20 +29,27 @@ export default function Tabs(props: Props) {
   }
 
   return (
-    <ScrollView style={styles.root}>
-      <View style={styles.container}>
-        {props.items.map((text, i) => (
-          <Pressable key={i} style={[styles.tab, selected.includes(i) && styles.active]} onPress={() => toggleItem(i)}>
-            <Text style={{ fontSize: 16 }}>{text}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <View>
+      <ScrollView style={styles.root}>
+        <View style={styles.container}>
+          {props.items.map((text, i) => (
+            <Pressable
+              key={i}
+              level={1}
+              style={[styles.tab, selected.includes(i) && styles.active]}
+              onPress={() => toggleItem(i)}
+            >
+              <Text style={{ fontSize: 16 }}>{text}</Text>
+            </Pressable>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
   root: {
-    height: 160,
+    height: 150,
   },
   container: {
     flexDirection: 'row',

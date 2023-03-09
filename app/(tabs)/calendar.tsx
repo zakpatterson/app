@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import { View } from '../../components/Themed';
 import Tabs from '../../components/Tabs';
@@ -7,33 +7,35 @@ import CalendarEventListItem from '../../components/CalendarEventListItem';
 export default function TabEventCalendar() {
   return (
     <View style={styles.container}>
-      <View style={styles.list}>
-        <Tabs
-          items={[
-            'Kelppari A',
-            'Kelppari B',
-            'Kelppari C',
-            'Kelppari D',
-            '🥕 Oppilastoiminta',
-            '🏆 Kilpailut',
-            '🫓 FS',
-            '🤸‍♀️ Freestyle',
-            '📐 Kulma',
-            '🐿️ WS',
-            '👥 CF',
-            '💀 Swoop',
-            '🪂 Taivas',
-            '💨 Tunneli',
-            '🍻 Oheistoiminta',
-            '🦺 Turvallisuus',
-            '🫡 Kerhotoiminta',
-          ]}
-          selectedIndex={0}
-        />
-        <CalendarEventListItem />
-        <CalendarEventListItem />
-        <CalendarEventListItem />
-      </View>
+      <Tabs
+        items={[
+          'Kelppari A',
+          'Kelppari B',
+          'Kelppari C',
+          'Kelppari D',
+          '🥕 Oppilastoiminta',
+          '🏆 Kilpailut',
+          '🫓 FS',
+          '🤸‍♀️ Freestyle',
+          '📐 Kulma',
+          '🐿️ WS',
+          '👥 CF',
+          '💀 Swoop',
+          '🪂 Taivas',
+          '💨 Tunneli',
+          '🍻 Oheistoiminta',
+          '🦺 Turvallisuus',
+          '🫡 Kerhotoiminta',
+        ]}
+        selectedIndex={0}
+      />
+      <ScrollView>
+        <View style={styles.list}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((i) => (
+            <CalendarEventListItem key={i} />
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }
