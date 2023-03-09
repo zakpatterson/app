@@ -1,22 +1,65 @@
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
-import { useEffect, useState } from 'react';
-import { fetchMetar } from '../../helpers/metar';
+import WindArrow from '../../components/WindArrow';
 
 export default function TabWeather() {
-  const [latestMetar, setLatestMetar] = useState('');
-
-  useEffect(() => {
-    fetchMetar('EFUT').then((weather) =>
-      // prettier-ignore
-      setLatestMetar(weather['wfs:FeatureCollection']['wfs:member'][0]['avi:VerifiableMessage'][0]['avi:metadata'][0]['avi:MessageMetadata'][0]['avi:source'][0]['avi:Process'][0]['avi:input'][0])
-    );
-  }, []);
-
   return (
     <View style={styles.root}>
-      <Text>{latestMetar}</Text>
+      <View>
+        <Text style={styles.windDirectionValue}>Keskituuli</Text>
+        <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
+          <WindArrow direction={45} size={48} />
+          <Text style={styles.windGustValue}>6 m/s</Text>
+        </View>
+      </View>
+
+      <View style={{ flexDirection: 'row', gap: 32, flexWrap: 'wrap' }}>
+        <View>
+          <Text style={styles.windDirectionValue}>Vaihteluväli</Text>
+          <Text style={styles.larger}>5–7 m/s</Text>
+        </View>
+
+        <View>
+          <Text style={styles.windDirectionValue}>Puuskat</Text>
+          <Text style={styles.larger}>7 m/s</Text>
+        </View>
+
+        <View>
+          <Text style={styles.windDirectionValue}>Pilvet</Text>
+          <Text style={styles.larger}>2 000 m</Text>
+        </View>
+
+        <View>
+          <Text style={styles.windDirectionValue}>Aurinko laskee</Text>
+          <Text style={styles.larger}>18:00</Text>
+        </View>
+
+        <View>
+          <Text style={styles.windDirectionValue}>Maalämpötila</Text>
+          <Text style={styles.larger}>11°C</Text>
+        </View>
+      </View>
+
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={[styles.windDirectionValue, { flex: 1 }]}>1 000 m</Text>
+        <Text style={styles.windDirectionValue}>Ei pilviä</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={[styles.windDirectionValue, { flex: 1 }]}>1 500 m</Text>
+        <Text style={styles.windDirectionValue}>Ei pilviä</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={[styles.windDirectionValue, { flex: 1 }]}>2 000 m</Text>
+        <Text style={styles.windDirectionValue}>Vähän pilviä</Text>
+      </View>
+
+      <Text>
+        Tiedot ovat viittellisiä ja perustuvat METAR-sanomiin. Tietojen oikeellisuutta ei voida taata. Tarkkaile
+        tuulipussia ja tee lopullinen hyppypäätös aina itse!
+      </Text>
     </View>
   );
 }
@@ -24,5 +67,18 @@ export default function TabWeather() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    padding: 16,
+    gap: 32,
+  },
+  windGustValue: {
+    fontSize: 48,
+    fontWeight: '600',
+  },
+  larger: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  windDirectionValue: {
+    fontSize: 16,
   },
 });

@@ -53,6 +53,8 @@ export default function TabLayout() {
         options={{
           title: 'Hyppykeli',
           tabBarIcon: ({ color }) => <TabBarIcon name="cloud" color={color} />,
+          headerTitle: 'Dropzone EFUT',
+          headerTitleAlign: 'left',
         }}
       />
     </Tabs>
