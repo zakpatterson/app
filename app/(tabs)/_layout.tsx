@@ -26,7 +26,7 @@ export default function TabLayout() {
           title: 'Kalenteri',
           tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href="/event/create" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FeatherIcons

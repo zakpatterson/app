@@ -1,10 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FeatherIcons from '@expo/vector-icons/Feather';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, useNavigation, useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { Pressable, useColorScheme } from 'react-native';
 
+import Colors from '../constants/Colors';
 import { ApolloProvider, client } from '../helpers/apollo';
 
 export {
@@ -43,11 +45,55 @@ function RootLayoutNav() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
+        <Stack initialRouteName="calendar">
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+
+          <Stack.Screen
+            name="event/[eventId]"
+            options={{
+              presentation: 'modal',
+              title: 'Tapahtuma',
+              headerLeft() {
+                return <CloseButton />;
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="event/create"
+            options={{
+              presentation: 'modal',
+              title: 'Luo uusi tapahtuma',
+              headerLeft() {
+                return <CloseButton />;
+              },
+            }}
+          />
         </Stack>
       </ThemeProvider>
     </ApolloProvider>
   );
 }
+
+const CloseButton = () => {
+  const router = useRouter();
+  const navigation = useNavigation();
+  const colorScheme = useColorScheme();
+
+  if (!navigation.canGoBack()) {
+    return null;
+  }
+
+  return (
+    <Pressable onPress={() => router.back()}>
+      {({ pressed }) => (
+        <FeatherIcons
+          name="x"
+          size={25}
+          color={Colors[colorScheme ?? 'light'].tint}
+          style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+        />
+      )}
+    </Pressable>
+  );
+};
