@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, Image } from 'react-native';
+import { useNavigation } from 'expo-router';
 
 import { Text, View } from '../../components/Themed';
 
 import PlaceholderImageSrc from '../../assets/images/byman.jpeg';
+import { useEffect } from 'react';
 
 export default function EventModalScreen() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Foobar',
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <Image source={PlaceholderImageSrc} style={styles.headerImage} />
@@ -22,5 +32,6 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     height: 200,
+    width: '100%',
   },
 });

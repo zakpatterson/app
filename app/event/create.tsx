@@ -22,8 +22,6 @@ export default function CreateEventModalScreen() {
           Väärinkäyttötapauksissa moderaattorit varaavat oikeuden estää uusien tapahtumien luonnin käyttäjältä
         </Text>
 
-        <Text style={styles.text}>Jotta tapahtuma voidaan julkaista ...</Text>
-
         <TextInput label="Otsikko" />
 
         <TextInput label="Kuvaus" multiline style={{ height: 200 }} />

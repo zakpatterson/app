@@ -62,7 +62,7 @@ function RootLayoutNav() {
           <Stack.Screen
             name="event/create"
             options={{
-              presentation: 'modal',
+              presentation: 'fullScreenModal',
               title: 'Luo uusi tapahtuma',
               headerLeft() {
                 return <CloseButton />;
