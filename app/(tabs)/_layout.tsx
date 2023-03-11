@@ -42,6 +42,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="community"
+        options={{
+          title: 'Yhteisö',
+          tabBarIcon: ({ color }) => <TabBarIcon name="message-square" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="weather"
         options={{
           title: 'Hyppykeli',
