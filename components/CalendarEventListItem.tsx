@@ -1,5 +1,5 @@
 import { StyleSheet, Image } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 
 import { Pressable, Text, View } from './Themed';
@@ -7,19 +7,26 @@ import { Pressable, Text, View } from './Themed';
 import PlaceholderImageSrc from '../assets/images/byman.jpeg';
 
 export default function CalendarEventListItem(props: Props) {
-  return (
-    <Link href="/event/1234" asChild onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}>
-      <Pressable style={styles.root} level={0}>
-        <Image source={PlaceholderImageSrc} style={styles.image} />
-        <View style={styles.rightSide}>
-          <Text style={styles.title}>Pääsiäisboogiet 🐣</Text>
-          <Text style={{ fontSize: 16 }}>Apr 7 – 10 (in a month)</Text>
-          <Text style={{ fontSize: 16 }}>Dropzone EFLA</Text>
+  const router = useRouter();
 
-          <Text style={{ fontSize: 16 }}>Skydive Häme</Text>
-        </View>
-      </Pressable>
-    </Link>
+  return (
+    <Pressable
+      style={styles.root}
+      level={0}
+      onPress={() => {
+        router.push('/event/1234');
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }}
+    >
+      <Image source={PlaceholderImageSrc} style={styles.image} />
+      <View style={styles.rightSide}>
+        <Text style={styles.title}>Pääsiäisboogiet 🐣</Text>
+        <Text style={{ fontSize: 16 }}>Apr 7 – 10 (in a month)</Text>
+        <Text style={{ fontSize: 16 }}>Dropzone EFLA</Text>
+
+        <Text style={{ fontSize: 16 }}>Skydive Häme</Text>
+      </View>
+    </Pressable>
   );
 }
 const styles = StyleSheet.create({
