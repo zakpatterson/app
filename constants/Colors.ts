@@ -5,6 +5,8 @@ export default {
   light: {
     text: '#000',
     background: '#fff',
+    primary: '#2563eb',
+    pressed: '#3b82f6',
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
@@ -15,6 +17,8 @@ export default {
   dark: {
     text: '#fff',
     background: '#000',
+    primary: '#1d4ed8',
+    pressed: '#2563eb',
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,

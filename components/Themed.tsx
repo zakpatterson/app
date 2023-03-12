@@ -36,8 +36,11 @@ type ThemeProps = {
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 export type PressableProps = { level: 0 | 1 | 2 } & ThemeProps & DefaultPressableProps;
-export type TextInputProps = { label?: string } & ThemeProps & DefaultTextInput['props'];
+export type TextInputProps = { label?: string; flex?: number } & ThemeProps & DefaultTextInput['props'];
 
+/**
+ * @deprecated
+ */
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
@@ -57,27 +60,4 @@ export function View(props: ViewProps) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
-}
-
-export function TextInput(props: TextInputProps) {
-  const { style: passthruStyle, lightColor, darkColor, label, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raised1');
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-
-  const style = {
-    padding: 16,
-    // paddingTop is overriden by React Native, thus it has to be set explicitly
-    paddingTop: 16,
-    fontSize: 16,
-    borderRadius: 8,
-    backgroundColor,
-    color,
-  };
-
-  return (
-    <View style={{ gap: 4 }}>
-      {label && <Text>{label}</Text>}
-      <DefaultTextInput style={[style, passthruStyle]} {...otherProps} />
-    </View>
-  );
 }

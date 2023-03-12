@@ -1,31 +1,56 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import { Image, Platform, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { Text, View, TextInput } from '../../components/Themed';
+import { View } from '../../components/Themed';
+import Text from '../../components/atoms/Text';
+import Button from '../../components/atoms/Button';
+import TextInput from '../../components/atoms/TextInput';
+import FormControl from '../../components/atoms/FormControl';
+
+import ProtectedSvg from '../../assets/images/protected.png';
+import IllustrationSrc from '../../assets/images/illustration.png';
 
 export default function CreateEventModalScreen() {
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView extraScrollHeight={32}>
       <View style={styles.container}>
-        <Text style={styles.text}>Kaikki käyttäjät voivat luoda tapahtumia yhteiseen kalenteriin</Text>
+        <Image source={IllustrationSrc} style={{ width: '100%', height: 300 }} resizeMode="contain" />
+        <FormControl label="Otsikko">
+          <TextInput />
+        </FormControl>
 
-        <Text style={styles.text}>
-          Pitääksemme palvelun laadun korkeana, moderaattorimme tarkistavat jokaisen tapahtuman julkaisukelpoisuuden.
-        </Text>
+        <FormControl label="Paikka">
+          <TextInput />
+        </FormControl>
 
-        <Text style={styles.text}>
-          Tarvittaessa moderaattorimme tekevät muutoksia ilmoitukseen tai jättävät sen julkaisematta.
-        </Text>
+        <View style={{ flexDirection: 'row', gap: 32 }}>
+          <FormControl label="Alkaa" style={{ flex: 1 }}>
+            <Button variant="textInput" />
+          </FormControl>
 
-        <Text style={styles.text}>
-          Väärinkäyttötapauksissa moderaattorit varaavat oikeuden estää uusien tapahtumien luonnin käyttäjältä
-        </Text>
+          <FormControl label="Päättyy" style={{ flex: 1 }}>
+            <Button variant="textInput" />
+          </FormControl>
+        </View>
 
-        <TextInput label="Otsikko" />
+        <FormControl label="Kuvaus">
+          <TextInput multiline style={{ height: 300 }} />
+        </FormControl>
 
-        <TextInput label="Kuvaus" multiline style={{ height: 200 }} />
+        <FormControl label="Järjestäjä">
+          <Button variant="textInput" />
+        </FormControl>
 
+        <View style={{ flexDirection: 'row', gap: 16 }}>
+          <Image source={ProtectedSvg} style={{ width: 48, height: 48 }} resizeMode="contain" />
+
+          <Text style={{ flex: 1 }}>
+            Moderaattori tarkistaa ilmoituksen ennen julkaisua ja voi oman harkintansa mukaan tehdä siihen muutoksia tai
+            jättää ilmoituksen kokonaan julkaisematta. Kiitos yhteistyöstäsi!
+          </Text>
+        </View>
+        <Button text="Lähetä tarkistettavaksi" variant="primary" />
         {/* Use a light status bar on iOS to account for the black space above the modal */}
         <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
       </View>
@@ -37,12 +62,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    gap: 16,
+    marginBottom: 32,
+    gap: 32,
   },
   headerImage: {
     height: 200,
-  },
-  text: {
-    fontSize: 16,
   },
 });

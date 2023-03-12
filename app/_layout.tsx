@@ -63,7 +63,7 @@ function RootLayoutNav() {
             name="event/create"
             options={{
               presentation: 'fullScreenModal',
-              title: 'Luo uusi tapahtuma',
+              title: 'Uusi tapahtuma',
               headerLeft() {
                 return <CloseButton />;
               },
