@@ -52,7 +52,7 @@ function RootLayoutNav() {
             name="event/[eventId]"
             options={{
               presentation: 'modal',
-              title: 'Tapahtuma',
+              headerTransparent: true,
               headerLeft() {
                 return <CloseButton />;
               },
