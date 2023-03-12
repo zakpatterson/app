@@ -49,6 +49,14 @@ function RootLayoutNav() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
           <Stack.Screen
+            name="auth"
+            options={{
+              presentation: 'fullScreenModal',
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
             name="event/[eventId]"
             options={{
               presentation: 'modal',
