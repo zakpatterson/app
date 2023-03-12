@@ -18,6 +18,8 @@ export default function Button(props: Props) {
   function getBackgroundColor(pressed: boolean): StyleProp<ViewStyle> {
     if (variant === 'primary') {
       return { backgroundColor: pressed ? themeColors.pressed : themeColors.primary };
+    } else if (variant === 'secondary') {
+      return { backgroundColor: themeColors.secondaryButton };
     } else if (variant === 'textInput') {
       return { backgroundColor: themeColors.raised1 };
     }
