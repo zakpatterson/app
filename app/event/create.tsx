@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, Platform, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useRouter } from 'expo-router';
 
 import { View } from '../../components/Themed';
 import Text from '../../components/atoms/Text';
@@ -12,6 +13,8 @@ import ProtectedSvg from '../../assets/images/protected.png';
 import IllustrationSrc from '../../assets/images/illustration.png';
 
 export default function CreateEventModalScreen() {
+  const router = useRouter();
+
   return (
     <KeyboardAwareScrollView extraScrollHeight={32}>
       <View style={styles.container}>
@@ -24,13 +27,13 @@ export default function CreateEventModalScreen() {
           <TextInput />
         </FormControl>
 
-        <View style={{ flexDirection: 'row', gap: 32 }}>
+        <View style={{ flexDirection: 'row', gap: 16 }}>
           <FormControl label="Alkaa" style={{ flex: 1 }}>
-            <Button variant="textInput" />
+            <Button variant="textInput" onPress={() => router.push('/datepicker')} />
           </FormControl>
 
           <FormControl label="Päättyy" style={{ flex: 1 }}>
-            <Button variant="textInput" />
+            <Button variant="textInput" onPress={() => router.push('/datepicker')} />
           </FormControl>
         </View>
 

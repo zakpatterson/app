@@ -1,43 +1,37 @@
 import React from 'react';
-import {
-  Pressable,
-  Text,
-  useColorScheme,
-  StyleSheet,
-  PressableStateCallbackType,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import { Pressable, Text, useColorScheme, StyleSheet, StyleProp, ViewStyle, PressableProps } from 'react-native';
 
 import Colors from '../../constants/Colors';
 
-export interface Props {
+export type Props = {
   text?: string;
   variant: 'primary' | 'secondary' | 'tertiary' | 'textInput';
   style?: StyleProp<ViewStyle>;
-}
+} & PressableProps;
 
 export default function Button(props: Props) {
+  const { style, variant, text, ...rest } = props;
+
   const colorScheme = useColorScheme() ?? 'light';
   const themeColors = Colors[colorScheme];
 
   function getBackgroundColor(pressed: boolean): StyleProp<ViewStyle> {
-    if (props.variant === 'primary') {
+    if (variant === 'primary') {
       return { backgroundColor: pressed ? themeColors.pressed : themeColors.primary };
-    } else if (props.variant === 'textInput') {
+    } else if (variant === 'textInput') {
       return { backgroundColor: themeColors.raised1 };
     }
   }
 
   function getBorder(): StyleProp<ViewStyle> {
-    if (props.variant === 'textInput') {
+    if (variant === 'textInput') {
       return { borderWidth: 1, borderColor: themeColors.raised2 };
     }
   }
 
   return (
-    <Pressable style={({ pressed }) => [styles.root, getBackgroundColor(pressed), getBorder(), props.style]}>
-      <Text style={[styles.text]}>{props.text ?? ' '}</Text>
+    <Pressable style={({ pressed }) => [styles.root, getBackgroundColor(pressed), getBorder(), style]} {...rest}>
+      <Text style={[styles.text]}>{text ?? ' '}</Text>
     </Pressable>
   );
 }

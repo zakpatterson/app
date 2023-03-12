@@ -69,6 +69,17 @@ function RootLayoutNav() {
               },
             }}
           />
+
+          <Stack.Screen
+            name="datepicker"
+            options={{
+              presentation: 'formSheet',
+              title: 'Valitse päivämäärä',
+              headerLeft() {
+                return <CloseButton />;
+              },
+            }}
+          />
         </Stack>
       </ThemeProvider>
     </ApolloProvider>
