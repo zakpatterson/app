@@ -41,6 +41,7 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="community"
         options={{
@@ -48,13 +49,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="message-square" color={color} />,
         }}
       />
+
       <Tabs.Screen
-        name="weather"
+        name="more"
         options={{
-          title: 'Hyppykeli',
-          tabBarIcon: ({ color }) => <TabBarIcon name="cloud" color={color} />,
-          headerTitle: 'Dropzone EFUT',
-          headerTitleAlign: 'left',
+          title: 'Lisää',
+          tabBarIcon: ({ color }) => <TabBarIcon name="more-vertical" color={color} />,
         }}
       />
     </Tabs>

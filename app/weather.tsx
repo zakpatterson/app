@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from '../../components/Themed';
-import WindArrow from '../../components/WindArrow';
+import { Text, View } from '../components/Themed';
+import WindArrow from '../components/WindArrow';
 
 export default function TabWeather() {
   return (
