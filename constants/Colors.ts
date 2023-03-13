@@ -14,6 +14,9 @@ export default {
     raised0: '#fff',
     raised1: '#EFEFEF',
     raised2: '#E0E0E0',
+    menuDivider: '#CCCCCE',
+    menuItemIdle: '#FFF',
+    menuItemPressed: '#E5E4E8',
   },
   dark: {
     text: '#fff',
@@ -25,7 +28,10 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
     raised0: '#000',
-    raised1: '#222',
+    raised1: '#16171B',
     raised2: '#333',
+    menuDivider: '#38383B',
+    menuItemIdle: '#1C1B1E',
+    menuItemPressed: '#2C2C2E',
   },
 };

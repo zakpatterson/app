@@ -1,12 +1,18 @@
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { View } from '../../components/Themed';
-import Text from '../../components/atoms/Text';
+import MenuGroup from '../../components/atoms/MenuGroup';
+import MenuItem from '../../components/atoms/MenuItem';
 
 export default function TabEventCalendar() {
   return (
     <View style={styles.container}>
-      <Text>Moikka :)</Text>
+      <MenuGroup>
+        <MenuItem left="Hyppykeli" href="/weather" />
+        <MenuItem left="Siipikuormalaskuri" />
+      </MenuGroup>
+      <MenuGroup>
+        <MenuItem left="Kirjaudu ulos" href="/auth" />
+      </MenuGroup>
     </View>
   );
 }
@@ -15,5 +21,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    gap: 16,
   },
 });
