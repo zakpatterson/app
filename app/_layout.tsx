@@ -1,12 +1,11 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import FeatherIcons from '@expo/vector-icons/Feather';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack, useNavigation, useRouter } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { Pressable, useColorScheme } from 'react-native';
+import { useColorScheme } from 'react-native';
 
-import Colors from '../constants/Colors';
+import CloseButton from '../components/CloseButton';
 import { ApolloProvider, client } from '../helpers/apollo';
 
 export {
@@ -62,7 +61,7 @@ function RootLayoutNav() {
               presentation: 'modal',
               headerTransparent: true,
               headerLeft() {
-                return <CloseButton />;
+                return <CloseButton raised />;
               },
             }}
           />
@@ -93,26 +92,3 @@ function RootLayoutNav() {
     </ApolloProvider>
   );
 }
-
-const CloseButton = () => {
-  const router = useRouter();
-  const navigation = useNavigation();
-  const colorScheme = useColorScheme();
-
-  if (!navigation.canGoBack()) {
-    return null;
-  }
-
-  return (
-    <Pressable onPress={() => router.back()}>
-      {({ pressed }) => (
-        <FeatherIcons
-          name="x"
-          size={25}
-          color={Colors[colorScheme ?? 'light'].tint}
-          style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-        />
-      )}
-    </Pressable>
-  );
-};
