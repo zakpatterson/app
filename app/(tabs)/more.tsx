@@ -8,7 +8,7 @@ export default function TabEventCalendar() {
     <View style={styles.container}>
       <MenuGroup>
         <MenuItem left="Hyppykeli" href="/weather" />
-        <MenuItem left="Siipikuormalaskuri" />
+        <MenuItem left="Siipikuormalaskuri" href="/wingload" />
       </MenuGroup>
       <MenuGroup>
         <MenuItem left="Kirjaudu ulos" href="/auth" />
