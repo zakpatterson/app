@@ -17,6 +17,7 @@ export default {
     menuDivider: '#CCCCCE',
     menuItemIdle: '#FFF',
     menuItemPressed: '#E5E4E8',
+    sliderTrackMax: '#E1E0E5',
   },
   dark: {
     text: '#fff',
@@ -33,5 +34,6 @@ export default {
     menuDivider: '#38383B',
     menuItemIdle: '#1C1B1E',
     menuItemPressed: '#2C2C2E',
+    sliderTrackMax: '#35333A',
   },
 };
