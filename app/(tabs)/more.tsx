@@ -7,6 +7,7 @@ export default function TabEventCalendar() {
   return (
     <View style={styles.container}>
       <MenuGroup>
+        <MenuItem left="Kartta" href="/map" />
         <MenuItem left="Hyppykeli" href="/weather" />
         <MenuItem left="Siipikuormalaskuri" href="/wingload" />
       </MenuGroup>
