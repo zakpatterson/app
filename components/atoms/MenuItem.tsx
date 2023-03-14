@@ -8,6 +8,7 @@ import Colors from '../../constants/Colors';
 
 interface Props {
   left: string;
+  right?: string;
   href?: string;
 }
 
@@ -25,6 +26,7 @@ export default function MenuItem(props: Props) {
       ]}
     >
       <Text style={{ flex: 1 }}>{props.left}</Text>
+      {props.right && <Text>{props.right}</Text>}
       <View>
         {props.href && (
           <FeatherIcons name="chevron-right" size={16} color={Colors[colorScheme].text} style={styles.chevron} />
