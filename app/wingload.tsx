@@ -1,5 +1,5 @@
 import { useMemo, useReducer, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import Text from '../components/atoms/Text';
 import Slider from '../components/atoms/Slider';
@@ -10,7 +10,8 @@ type Action =
   | { type: 'setJumperWeight'; jumperWeight: number }
   | { type: 'setGearWeight'; gearWeight: number }
   | { type: 'setCanopySize'; canopySize: number }
-  | { type: 'setWingload'; wingload: number };
+  | { type: 'setWingload'; wingload: number }
+  | { type: 'slideStart' | 'slideEnd' };
 
 type State = {
   jumperWeight: number;
@@ -18,14 +19,13 @@ type State = {
   exitWeight: number;
   canopySize: number;
   wingload: number;
+  scrollEnabled: boolean;
 };
 
 const KG_TO_LBS = 2.20462262;
 const REDZONE_WINGLOAD = 1.34;
 const GREENZONE_MIN_CANOPY = 135;
 const GREENZONE_MAX_CANOPY = 210;
-const GREENZONE_MIN_WINGLOAD = (63 * KG_TO_LBS) / 135;
-const GREENZONE_MAX_WINGLOAD = REDZONE_WINGLOAD;
 const MINIMUM_WINGLOAD = 0.8;
 
 const GREENZONE_MIN_WEIGHT = 60;
@@ -97,6 +97,16 @@ function reducer(state: State, action: Action): State {
       wingload: action.wingload,
       exitWeight,
     };
+  } else if (action.type === 'slideStart') {
+    return {
+      ...state,
+      scrollEnabled: false,
+    };
+  } else if (action.type === 'slideEnd') {
+    return {
+      ...state,
+      scrollEnabled: true,
+    };
   }
 
   return state;
@@ -109,6 +119,7 @@ export default function WingloadScreen() {
     exitWeight: 92,
     canopySize: 180,
     wingload: 1.12680711689,
+    scrollEnabled: true,
   });
 
   const canopyMax = calculateCanopySizeForExitWeightAndWingload(state.exitWeight, MINIMUM_WINGLOAD);
@@ -116,76 +127,86 @@ export default function WingloadScreen() {
   const canopyMinRecommended = Math.max(canopyMin, calculateMaximumRecommendedCanopySize(state.exitWeight));
 
   return (
-    <View style={styles.root}>
-      <MenuGroup title="Määritykset">
-        <MenuItem
-          left="Hyppääjän paino"
-          right={formatWeight(state.jumperWeight)}
-          content={
-            <Slider
-              animationType="spring"
-              value={state.jumperWeight}
-              onValueChange={(value) => dispatch({ type: 'setJumperWeight', jumperWeight: value[0] })}
-              minimumValue={40}
-              maximumValue={150}
-            />
-          }
-        />
+    <ScrollView scrollEnabled={state.scrollEnabled}>
+      <View style={styles.root}>
+        <MenuGroup title="Määritykset">
+          <MenuItem
+            left="Hyppääjän paino"
+            right={formatWeight(state.jumperWeight)}
+            content={
+              <Slider
+                animationType="spring"
+                value={state.jumperWeight}
+                onValueChange={(value) => dispatch({ type: 'setJumperWeight', jumperWeight: value[0] })}
+                onSlidingStart={() => dispatch({ type: 'slideStart' })}
+                onSlidingComplete={() => dispatch({ type: 'slideEnd' })}
+                minimumValue={40}
+                maximumValue={150}
+              />
+            }
+          />
 
-        <MenuItem
-          left="Varusteiden paino"
-          right={formatWeight(state.gearWeight)}
-          content={
-            <Slider
-              animationType="spring"
-              value={state.gearWeight}
-              onValueChange={(value) => dispatch({ type: 'setGearWeight', gearWeight: value[0] })}
-              minimumValue={5}
-              maximumValue={30}
-            />
-          }
-        />
+          <MenuItem
+            left="Varusteiden paino"
+            right={formatWeight(state.gearWeight)}
+            content={
+              <Slider
+                animationType="spring"
+                value={state.gearWeight}
+                onValueChange={(value) => dispatch({ type: 'setGearWeight', gearWeight: value[0] })}
+                onSlidingStart={() => dispatch({ type: 'slideStart' })}
+                onSlidingComplete={() => dispatch({ type: 'slideEnd' })}
+                minimumValue={5}
+                maximumValue={30}
+              />
+            }
+          />
 
-        <MenuItem
-          left="Kuvun koko"
-          right={formatCanopySize(state.canopySize)}
-          content={
-            <Slider
-              animationType="spring"
-              value={state.canopySize}
-              onValueChange={(value) => dispatch({ type: 'setCanopySize', canopySize: value[0] })}
-              minimumValue={100}
-              maximumValue={300}
-            />
-          }
-        />
+          <MenuItem
+            left="Kuvun koko"
+            right={formatCanopySize(state.canopySize)}
+            content={
+              <Slider
+                animationType="spring"
+                value={state.canopySize}
+                onValueChange={(value) => dispatch({ type: 'setCanopySize', canopySize: value[0] })}
+                onSlidingStart={() => dispatch({ type: 'slideStart' })}
+                onSlidingComplete={() => dispatch({ type: 'slideEnd' })}
+                minimumValue={100}
+                maximumValue={350}
+              />
+            }
+          />
 
-        <MenuItem
-          left="Siipikuorma"
-          right={formatWingload(state.wingload)}
-          content={
-            <Slider
-              animationType="spring"
-              value={state.wingload}
-              onValueChange={(value) => dispatch({ type: 'setWingload', wingload: value[0] })}
-              minimumValue={0.5}
-              maximumValue={3}
-            />
-          }
-        />
-      </MenuGroup>
+          <MenuItem
+            left="Siipikuorma"
+            right={formatWingload(state.wingload)}
+            content={
+              <Slider
+                animationType="spring"
+                value={state.wingload}
+                onValueChange={(value) => dispatch({ type: 'setWingload', wingload: value[0] })}
+                onSlidingStart={() => dispatch({ type: 'slideStart' })}
+                onSlidingComplete={() => dispatch({ type: 'slideEnd' })}
+                minimumValue={0.5}
+                maximumValue={3}
+              />
+            }
+          />
+        </MenuGroup>
 
-      <MenuGroup title="Rajat A- ja B-kelppareille">
-        <MenuItem left="🔴 Ei saa alittaa" right={formatCanopySize(canopyMin)} />
-        <MenuItem left="🟡 Pienin suositeltava" right={formatCanopySize(canopyMinRecommended)} />
-        <MenuItem left="🟢 Suurin suositeltava" right={formatCanopySize(canopyMax)} />
-      </MenuGroup>
+        <MenuGroup title="Rajat A- ja B-kelppareille">
+          <MenuItem left="🔴 Ei saa alittaa" right={formatCanopySize(canopyMin)} />
+          <MenuItem left="🟡 Pienin suositeltava" right={formatCanopySize(canopyMinRecommended)} />
+          <MenuItem left="🟢 Suurin suositeltava" right={formatCanopySize(canopyMax)} />
+        </MenuGroup>
 
-      <Text>
-        Rajat perustuvat Laskuvarjotoimikunnan vuonna 2022 julkaisemaan siipikuormataulukkoon. Keskustele kouluttajan
-        kanssa ennen kalustohankintoja.
-      </Text>
-    </View>
+        <Text>
+          Rajat perustuvat Laskuvarjotoimikunnan vuonna 2022 julkaisemaan siipikuormataulukkoon. Keskustele kouluttajan
+          kanssa ennen kalustohankintoja.
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
 
