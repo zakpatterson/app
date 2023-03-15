@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapView, { Geojson, Marker, GeojsonProps } from 'react-native-maps';
+import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
-import HomeIconSrc from '../assets/icons/icons8-home-96.png';
 import WindsockIconSrc from '../assets/icons/icons8-windsock-96.png';
 import GoalIconSrc from '../assets/icons/icons8-goal-96.png';
 import NoEntryIconSrc from '../assets/icons/icons8-no-entry-96.png';
@@ -16,17 +15,46 @@ function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
 }
 
 export default function MapScreen() {
+  const mapRef = useRef<MapView>(null);
+  const [accurateView, setAccurateView] = useState(false);
+
+  const onPanDrag = async (region: Region, details: Details) => {
+    const camera = await mapRef.current?.getCamera();
+
+    if (!camera) {
+      return;
+    }
+
+    const shouldBeInAccurateView =
+      (camera.altitude !== undefined && camera.altitude < 40_000) || (camera.zoom !== undefined && camera.zoom >= 12);
+
+    if (accurateView !== shouldBeInAccurateView) {
+      setAccurateView(shouldBeInAccurateView);
+    }
+  };
+
   return (
     <View style={styles.root}>
-      <MapView style={styles.root} mapType="hybrid" showsPointsOfInterest={false}>
+      <MapView
+        ref={mapRef}
+        style={styles.root}
+        mapType="hybrid"
+        showsPointsOfInterest={false}
+        onRegionChange={onPanDrag}
+      >
         {/* SdF */}
-        <Marker coordinate={{ latitude: 60.8977697, longitude: 26.9193624 }} image={HomeIconSrc} />
-        <Marker coordinate={{ latitude: 60.8962929, longitude: 26.9256754 }} image={WindsockIconSrc} />
-        <Marker coordinate={{ latitude: 60.897627, longitude: 26.926096 }} image={GoalIconSrc} />
-        <Marker coordinate={{ latitude: 60.8928867, longitude: 26.925906 }} image={NoEntryIconSrc} />
-        <Marker coordinate={{ latitude: 60.8950937, longitude: 26.9532117 }} image={NoEntryIconSrc} />
-        <Marker coordinate={{ latitude: 60.8979303, longitude: 26.9201116 }} image={RucksackIconSrc} />
-        <Marker coordinate={{ latitude: 60.8969242, longitude: 26.9193471 }} image={TakeoffIconSrc} />
+        <Marker coordinate={{ latitude: 60.8977697, longitude: 26.9193624 }} />
+        {accurateView && (
+          <>
+            <Marker coordinate={{ latitude: 60.8962929, longitude: 26.9256754 }} image={WindsockIconSrc} />
+            <Marker coordinate={{ latitude: 60.897627, longitude: 26.926096 }} image={GoalIconSrc} />
+            <Marker coordinate={{ latitude: 60.8928867, longitude: 26.925906 }} image={NoEntryIconSrc} />
+            <Marker coordinate={{ latitude: 60.8950937, longitude: 26.9532117 }} image={NoEntryIconSrc} />
+            <Marker coordinate={{ latitude: 60.8979303, longitude: 26.9201116 }} image={RucksackIconSrc} />
+            <Marker coordinate={{ latitude: 60.8969242, longitude: 26.9193471 }} image={TakeoffIconSrc} />
+            <Geojson geojson={coerceGeojson(UttiGeoJSON)} fillColor="rgba(128,0,0,0.25)" strokeColor="red" />
+          </>
+        )}
 
         {/* Vesis */}
         <Marker coordinate={{ latitude: 61.1491239, longitude: 25.6875153 }} />
@@ -60,8 +88,6 @@ export default function MapScreen() {
 
         {/* Kemi */}
         <Marker coordinate={{ latitude: 65.7775386, longitude: 24.5719851 }} />
-
-        <Geojson geojson={coerceGeojson(UttiGeoJSON)} fillColor="rgba(128,0,0,0.25)" strokeColor="red" />
       </MapView>
     </View>
   );
