@@ -1,18 +1,32 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Geojson, Marker, GeojsonProps } from 'react-native-maps';
 
-import Text from '../components/atoms/Text';
-import Slider from '../components/atoms/Slider';
-import MenuGroup from '../components/atoms/MenuGroup';
-import MenuItem from '../components/atoms/MenuItem';
+import HomeIconSrc from '../assets/icons/icons8-home-96.png';
+import WindsockIconSrc from '../assets/icons/icons8-windsock-96.png';
+import GoalIconSrc from '../assets/icons/icons8-goal-96.png';
+import NoEntryIconSrc from '../assets/icons/icons8-no-entry-96.png';
+import RucksackIconSrc from '../assets/icons/icons8-rucksack-96.png';
+import TakeoffIconSrc from '../assets/icons/icons8-airplane-take-off-96.png';
+
+import UttiGeoJSON from '../assets/geojson/efut.json';
+
+function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
+  return data as GeojsonProps['geojson'];
+}
 
 export default function MapScreen() {
   return (
     <View style={styles.root}>
-      <MapView style={styles.root} mapType="hybrid">
+      <MapView style={styles.root} mapType="hybrid" showsPointsOfInterest={false}>
         {/* SdF */}
-        <Marker coordinate={{ latitude: 60.8977697, longitude: 26.9193624 }} />
+        <Marker coordinate={{ latitude: 60.8977697, longitude: 26.9193624 }} image={HomeIconSrc} />
+        <Marker coordinate={{ latitude: 60.8962929, longitude: 26.9256754 }} image={WindsockIconSrc} />
+        <Marker coordinate={{ latitude: 60.897627, longitude: 26.926096 }} image={GoalIconSrc} />
+        <Marker coordinate={{ latitude: 60.8928867, longitude: 26.925906 }} image={NoEntryIconSrc} />
+        <Marker coordinate={{ latitude: 60.8950937, longitude: 26.9532117 }} image={NoEntryIconSrc} />
+        <Marker coordinate={{ latitude: 60.8979303, longitude: 26.9201116 }} image={RucksackIconSrc} />
+        <Marker coordinate={{ latitude: 60.8969242, longitude: 26.9193471 }} image={TakeoffIconSrc} />
 
         {/* Vesis */}
         <Marker coordinate={{ latitude: 61.1491239, longitude: 25.6875153 }} />
@@ -46,6 +60,8 @@ export default function MapScreen() {
 
         {/* Kemi */}
         <Marker coordinate={{ latitude: 65.7775386, longitude: 24.5719851 }} />
+
+        <Geojson geojson={coerceGeojson(UttiGeoJSON)} fillColor="rgba(128,0,0,0.25)" strokeColor="red" />
       </MapView>
     </View>
   );
