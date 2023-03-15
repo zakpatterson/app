@@ -2,14 +2,18 @@ import React, { RefObject, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
+import Text from '../components/atoms/Text';
+
 import WindsockIconSrc from '../assets/icons/icons8-windsock-96.png';
 import GoalIconSrc from '../assets/icons/icons8-goal-96.png';
 import NoEntryIconSrc from '../assets/icons/icons8-no-entry-96.png';
 import RucksackIconSrc from '../assets/icons/icons8-rucksack-96.png';
+import CarrotIconSrc from '../assets/icons/icons8-carrot-96.png';
+import BeerIconSrc from '../assets/icons/icons8-beer-96.png';
 import TakeoffIconSrc from '../assets/icons/icons8-airplane-take-off-96.png';
 
-import UttiGeoJSON from '../assets/geojson/efut.json';
-import Text from '../components/atoms/Text';
+import EfutGeoJson from '../assets/geojson/efut.json';
+import EfkeGeoJson from '../assets/geojson/efke.json';
 
 function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
   return data as GeojsonProps['geojson'];
@@ -78,7 +82,10 @@ export default function MapScreen() {
             <Marker coordinate={{ latitude: 60.8950937, longitude: 26.9532117 }} image={NoEntryIconSrc} />
             <Marker coordinate={{ latitude: 60.8979303, longitude: 26.9201116 }} image={RucksackIconSrc} />
             <Marker coordinate={{ latitude: 60.8969242, longitude: 26.9193471 }} image={TakeoffIconSrc} />
-            <Geojson geojson={coerceGeojson(UttiGeoJSON)} fillColor="rgba(128,0,0,0.25)" strokeColor="red" />
+            <Marker coordinate={{ latitude: 60.8938573, longitude: 26.9104967 }} image={BeerIconSrc} />
+            <Marker coordinate={{ latitude: 60.871943, longitude: 26.655462644 }} image={BeerIconSrc} />
+            <Marker coordinate={{ latitude: 60.876198, longitude: 26.65180349 }} image={BeerIconSrc} />
+            <Geojson geojson={coerceGeojson(EfutGeoJson)} fillColor="rgba(128,0,0,0.25)" strokeColor="red" />
           </>
         )}
 
@@ -92,7 +99,17 @@ export default function MapScreen() {
         <DropzoneMarker name="EFJY" coords={[62.4090321, 25.6708152]} mapRef={mapRef} />
         <DropzoneMarker name="EFKU" coords={[63.0105362, 27.7867077]} mapRef={mapRef} />
         <DropzoneMarker name="EFOU" coords={[64.9317604, 25.3780738]} mapRef={mapRef} />
+
         <DropzoneMarker name="EFKE" coords={[65.7775386, 24.5719851]} mapRef={mapRef} />
+        {accurateView && (
+          <>
+            <Marker coordinate={{ latitude: 65.779219, longitude: 24.570833 }} image={WindsockIconSrc} />
+            <Marker coordinate={{ latitude: 65.776947, longitude: 24.57789 }} image={CarrotIconSrc} />
+            <Marker coordinate={{ latitude: 65.794502, longitude: 24.5258638 }} image={BeerIconSrc} />
+            <Marker coordinate={{ latitude: 65.742791, longitude: 24.5789721 }} image={BeerIconSrc} />
+            <Geojson geojson={coerceGeojson(EfkeGeoJson)} />
+          </>
+        )}
       </MapView>
     </View>
   );
