@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from 'react';
+import React, { RefObject, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
@@ -14,6 +14,10 @@ import Text from '../components/atoms/Text';
 function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
   return data as GeojsonProps['geojson'];
 }
+
+const YELLOW_ALTITUDE = 1219; // 4000 ft
+const ORANGE_ALTITUDE = 1067; // 3500 ft
+const RED_ALTITUDE = 762; // 2500 ft
 
 export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
@@ -31,12 +35,32 @@ export default function MapScreen() {
     setAltitude(altitude);
   };
 
+  const altitudeColor = useMemo(() => {
+    if (altitude <= RED_ALTITUDE) {
+      return ['red', 'white'] as const;
+    } else if (altitude <= ORANGE_ALTITUDE) {
+      return ['orange', 'black'] as const;
+    } else if (altitude <= YELLOW_ALTITUDE) {
+      return ['yellow', 'black'] as const;
+    }
+
+    return ['black', 'white'] as const;
+  }, [altitude]);
+
   const accurateView = altitude <= 50_000;
 
   return (
     <View style={styles.root}>
-      <View style={{ alignItems: 'center', padding: 16 }}>
-        <Text>Korkeus {(altitude / 1000).toFixed(altitude <= 10_000 ? 1 : 0)} km</Text>
+      <View
+        style={{
+          padding: 16,
+          alignItems: 'center',
+          backgroundColor: altitudeColor[0],
+        }}
+      >
+        <Text style={{ color: altitudeColor[1] }}>
+          Korkeus {(altitude / 1000).toFixed(altitude <= 10_000 ? 1 : 0)} km
+        </Text>
       </View>
       <MapView
         ref={mapRef}
