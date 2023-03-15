@@ -26,7 +26,7 @@ export default function MapScreen() {
     }
 
     const shouldBeInAccurateView =
-      (camera.altitude !== undefined && camera.altitude < 40_000) || (camera.zoom !== undefined && camera.zoom >= 12);
+      (camera.altitude !== undefined && camera.altitude < 50_000) || (camera.zoom !== undefined && camera.zoom >= 11);
 
     if (accurateView !== shouldBeInAccurateView) {
       setAccurateView(shouldBeInAccurateView);
@@ -38,12 +38,12 @@ export default function MapScreen() {
       <MapView
         ref={mapRef}
         style={styles.root}
-        mapType="hybrid"
+        mapType={accurateView ? 'hybrid' : 'none'}
         showsPointsOfInterest={false}
         onRegionChange={onPanDrag}
       >
         {/* SdF */}
-        <Marker coordinate={{ latitude: 60.8977697, longitude: 26.9193624 }} />
+        <Marker coordinate={{ latitude: 60.8977697, longitude: 26.9193624 }} title="EFUT" />
         {accurateView && (
           <>
             <Marker coordinate={{ latitude: 60.8962929, longitude: 26.9256754 }} image={WindsockIconSrc} />
