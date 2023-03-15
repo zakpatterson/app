@@ -9,6 +9,7 @@ import RucksackIconSrc from '../assets/icons/icons8-rucksack-96.png';
 import TakeoffIconSrc from '../assets/icons/icons8-airplane-take-off-96.png';
 
 import UttiGeoJSON from '../assets/geojson/efut.json';
+import Text from '../components/atoms/Text';
 
 function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
   return data as GeojsonProps['geojson'];
@@ -16,7 +17,7 @@ function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
 
 export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
-  const [accurateView, setAccurateView] = useState(false);
+  const [altitude, setAltitude] = useState(1_000);
 
   const onPanDrag = async (region: Region, details: Details) => {
     const camera = await mapRef.current?.getCamera();
@@ -25,16 +26,18 @@ export default function MapScreen() {
       return;
     }
 
-    const shouldBeInAccurateView =
-      (camera.altitude !== undefined && camera.altitude < 50_000) || (camera.zoom !== undefined && camera.zoom >= 11);
+    const altitude = camera.altitude ?? gMapsZoomLevelToAltitude(camera.zoom!);
 
-    if (accurateView !== shouldBeInAccurateView) {
-      setAccurateView(shouldBeInAccurateView);
-    }
+    setAltitude(altitude);
   };
+
+  const accurateView = altitude <= 50_000;
 
   return (
     <View style={styles.root}>
+      <View style={{ alignItems: 'center', padding: 16 }}>
+        <Text>Korkeus {(altitude / 1000).toFixed(altitude <= 10_000 ? 1 : 0)} km</Text>
+      </View>
       <MapView
         ref={mapRef}
         style={styles.root}
@@ -95,6 +98,11 @@ function DropzoneMarker(props: DropzoneMarkerProps) {
       }
     />
   );
+}
+
+// https://stackoverflow.com/a/27004928
+function gMapsZoomLevelToAltitude(zoomLevel: number) {
+  return 35200000 / 2 ** zoomLevel;
 }
 
 const styles = StyleSheet.create({
