@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { RefObject, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
@@ -42,8 +42,7 @@ export default function MapScreen() {
         showsPointsOfInterest={false}
         onRegionChange={onPanDrag}
       >
-        {/* SdF */}
-        <Marker coordinate={{ latitude: 60.8977697, longitude: 26.9193624 }} title="EFUT" />
+        <DropzoneMarker name="EFUT" coords={[60.8977697, 26.9193624]} mapRef={mapRef} />
         {accurateView && (
           <>
             <Marker coordinate={{ latitude: 60.8962929, longitude: 26.9256754 }} image={WindsockIconSrc} />
@@ -56,40 +55,45 @@ export default function MapScreen() {
           </>
         )}
 
-        {/* Vesis */}
-        <Marker coordinate={{ latitude: 61.1491239, longitude: 25.6875153 }} />
-
-        {/* Turku */}
-        <Marker coordinate={{ latitude: 60.5087954, longitude: 22.2636276 }} />
-
-        {/* Karjala */}
-        <Marker coordinate={{ latitude: 61.2482849, longitude: 28.8954431 }} />
-
-        {/* Jämi */}
-        <Marker coordinate={{ latitude: 61.7806924, longitude: 22.7219118 }} />
-
-        {/* Pori */}
-        <Marker coordinate={{ latitude: 61.4627744, longitude: 21.8049771 }} />
-
-        {/* Vaasa */}
-        <Marker coordinate={{ latitude: 63.0345426, longitude: 21.7414303 }} />
-
-        {/* Alavus */}
-        <Marker coordinate={{ latitude: 62.5549554, longitude: 23.5641548 }} />
-
-        {/* Jyväskylä */}
-        <Marker coordinate={{ latitude: 62.4090321, longitude: 25.6708152 }} />
-
-        {/* Kuopio */}
-        <Marker coordinate={{ latitude: 63.0105362, longitude: 27.7867077 }} />
-
-        {/* Oulu */}
-        <Marker coordinate={{ latitude: 64.9317604, longitude: 25.3780738 }} />
-
-        {/* Kemi */}
-        <Marker coordinate={{ latitude: 65.7775386, longitude: 24.5719851 }} />
+        <DropzoneMarker name="EFLA" coords={[61.1491239, 25.6875153]} mapRef={mapRef} />
+        <DropzoneMarker name="EFTU" coords={[60.5087954, 22.2636276]} mapRef={mapRef} />
+        <DropzoneMarker name="EFIM" coords={[61.2482849, 28.8954431]} mapRef={mapRef} />
+        <DropzoneMarker name="EFJM" coords={[61.7806924, 22.7219118]} mapRef={mapRef} />
+        <DropzoneMarker name="EFPO" coords={[61.4627744, 21.8049771]} mapRef={mapRef} />
+        <DropzoneMarker name="EFVA" coords={[63.0345426, 21.7414303]} mapRef={mapRef} />
+        <DropzoneMarker name="EFAL" coords={[62.5549554, 23.5641548]} mapRef={mapRef} />
+        <DropzoneMarker name="EFJY" coords={[62.4090321, 25.6708152]} mapRef={mapRef} />
+        <DropzoneMarker name="EFKU" coords={[63.0105362, 27.7867077]} mapRef={mapRef} />
+        <DropzoneMarker name="EFOU" coords={[64.9317604, 25.3780738]} mapRef={mapRef} />
+        <DropzoneMarker name="EFKE" coords={[65.7775386, 24.5719851]} mapRef={mapRef} />
       </MapView>
     </View>
+  );
+}
+
+interface DropzoneMarkerProps {
+  coords: [number, number];
+  name: string;
+  mapRef: RefObject<MapView>;
+}
+
+function DropzoneMarker(props: DropzoneMarkerProps) {
+  return (
+    <Marker
+      coordinate={{ latitude: props.coords[0], longitude: props.coords[1] }}
+      onPress={() =>
+        props.mapRef.current?.animateCamera({
+          altitude: 5_000,
+          heading: 0,
+          pitch: 0,
+          zoom: 15,
+          center: {
+            latitude: props.coords[0],
+            longitude: props.coords[1],
+          },
+        })
+      }
+    />
   );
 }
 
