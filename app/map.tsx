@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
 import Text from '../components/atoms/Text';
+import AltitudeMeter from '../components/AltitudeMeter';
 
 import WindsockIconSrc from '../assets/icons/icons8-windsock-96.png';
 import GoalIconSrc from '../assets/icons/icons8-goal-96.png';
@@ -39,33 +40,10 @@ export default function MapScreen() {
     setAltitude(altitude);
   };
 
-  const altitudeColor = useMemo(() => {
-    if (altitude <= RED_ALTITUDE) {
-      return ['red', 'white'] as const;
-    } else if (altitude <= ORANGE_ALTITUDE) {
-      return ['orange', 'black'] as const;
-    } else if (altitude <= YELLOW_ALTITUDE) {
-      return ['yellow', 'black'] as const;
-    }
-
-    return ['black', 'white'] as const;
-  }, [altitude]);
-
   const accurateView = altitude <= 50_000;
 
   return (
     <View style={styles.root}>
-      <View
-        style={{
-          padding: 16,
-          alignItems: 'center',
-          backgroundColor: altitudeColor[0],
-        }}
-      >
-        <Text style={{ color: altitudeColor[1] }}>
-          Korkeus {(altitude / 1000).toFixed(altitude <= 10_000 ? 1 : 0)} km
-        </Text>
-      </View>
       <MapView
         ref={mapRef}
         style={styles.root}
@@ -111,6 +89,7 @@ export default function MapScreen() {
           </>
         )}
       </MapView>
+      {altitude < 10_000 && <AltitudeMeter altitude={altitude} />}
     </View>
   );
 }
