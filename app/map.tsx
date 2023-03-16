@@ -1,5 +1,5 @@
-import React, { RefObject, useMemo, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { RefObject, useRef, useState } from 'react';
+import { StyleSheet, View, Text as DefaultText } from 'react-native';
 import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
 import AltitudeMeter from '../components/AltitudeMeter';
@@ -99,6 +99,11 @@ export default function MapScreen() {
         )}
       </MapView>
       {altitude < 10_000 && <AltitudeMeter altitude={altitude} />}
+      {!accurateView && (
+        <View style={styles.overlayInstructionContainer}>
+          <DefaultText style={styles.overlayInstruction}>Napauta kohdetta pikasiirtyäksesi</DefaultText>
+        </View>
+      )}
     </View>
   );
 }
@@ -139,5 +144,20 @@ function gMapsZoomLevelToAltitude(zoomLevel: number) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+  },
+  overlayInstructionContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  overlayInstruction: {
+    borderRadius: 32,
+    fontSize: 16,
+    color: '#FFF',
+    padding: 8,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
