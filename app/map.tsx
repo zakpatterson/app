@@ -2,17 +2,19 @@ import React, { RefObject, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
-import Text from '../components/atoms/Text';
 import AltitudeMeter from '../components/AltitudeMeter';
 
+import HouseIconSrc from '../assets/icons/icons8-house-100.png';
 import WindsockIconSrc from '../assets/icons/icons8-windsock-100.png';
 import GoalIconSrc from '../assets/icons/icons8-goal-100.png';
 import NoEntryIconSrc from '../assets/icons/icons8-no-entry-100.png';
-import RucksackIconSrc from '../assets/icons/icons8-rucksack-96.png';
+import RucksackIconSrc from '../assets/icons/icons8-rucksack-100.png';
 import CarrotIconSrc from '../assets/icons/icons8-carrot-100.png';
 import BeerIconSrc from '../assets/icons/icons8-beer-100.png';
 import AirplaneIconSrc from '../assets/icons/icons8-airplane-100.png';
 import FastForwardIconSrc from '../assets/icons/icons8-fast-forward-100.png';
+import ErrorIconSrc from '../assets/icons/icons8-error-100.png';
+import FarmIconSrc from '../assets/icons/icons8-farm-2-100.png';
 
 import EfutGeoJson from '../assets/geojson/efut.json';
 import EfkeGeoJson from '../assets/geojson/efke.json';
@@ -101,6 +103,7 @@ interface DropzoneMarkerProps {
 function DropzoneMarker(props: DropzoneMarkerProps) {
   return (
     <Marker
+      image={HouseIconSrc}
       coordinate={{ latitude: props.coords[0], longitude: props.coords[1] }}
       onPress={() =>
         props.mapRef.current?.animateCamera({

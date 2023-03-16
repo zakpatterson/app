@@ -1,12 +1,14 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FeatherIcon from '@expo/vector-icons/Feather';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { Link, SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 import CloseButton from '../components/CloseButton';
 import { ApolloProvider, client } from '../helpers/apollo';
+import Colors from '../constants/Colors';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -82,6 +84,31 @@ function RootLayoutNav() {
             options={{
               presentation: 'formSheet',
               title: 'Valitse päivämäärä',
+              headerLeft() {
+                return <CloseButton />;
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="map"
+            options={{
+              title: 'Kartta',
+              headerRight() {
+                return (
+                  <Link href="map-legend">
+                    <FeatherIcon name="help-circle" size={24} color={Colors[colorScheme ?? 'light'].tint} />
+                  </Link>
+                );
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="map-legend"
+            options={{
+              presentation: 'modal',
+              title: 'Merkinnät kartalla',
               headerLeft() {
                 return <CloseButton />;
               },
