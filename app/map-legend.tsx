@@ -9,6 +9,7 @@ import GoalIconSrc from '../assets/icons/icons8-goal-100.png';
 import NoEntryIconSrc from '../assets/icons/icons8-no-entry-100.png';
 import RucksackIconSrc from '../assets/icons/icons8-rucksack-100.png';
 import CarrotIconSrc from '../assets/icons/icons8-carrot-100.png';
+import TeamIconSrc from '../assets/icons/icons8-team-100.png';
 import BeerIconSrc from '../assets/icons/icons8-beer-100.png';
 import AirplaneIconSrc from '../assets/icons/icons8-airplane-100.png';
 import FastForwardIconSrc from '../assets/icons/icons8-fast-forward-100.png';
@@ -24,6 +25,7 @@ export default function MapLegendScreen() {
         <LegendRow title="Tuulipussi" icon={WindsockIconSrc} />
         <LegendRow title="Laskeutumisalue" icon={GoalIconSrc} />
         <LegendRow title="Oppilaiden laskeutumisalue" icon={CarrotIconSrc} />
+        <LegendRow title="Tandemien laskeutumisalue" icon={TeamIconSrc} />
         <LegendRow title="Swooppausalue" icon={FastForwardIconSrc} />
         <LegendRow title="Lastausalue" icon={AirplaneIconSrc} />
         <LegendRow title="Pakkaushalli" icon={RucksackIconSrc} />
