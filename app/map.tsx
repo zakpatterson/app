@@ -20,6 +20,7 @@ import FarmIconSrc from '../assets/icons/icons8-farm-2-100.png';
 import EfutGeoJson from '../assets/geojson/efut.json';
 import EfkeGeoJson from '../assets/geojson/efke.json';
 import EflaGeoJson from '../assets/geojson/efla.json';
+import EfouGeoJson from '../assets/geojson/efou.json';
 
 function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
   return data as GeojsonProps['geojson'];
@@ -101,7 +102,30 @@ export default function MapScreen() {
         <DropzoneMarker name="EFAL" coords={[62.5549554, 23.5641548]} mapRef={mapRef} />
         <DropzoneMarker name="EFJY" coords={[62.4090321, 25.6708152]} mapRef={mapRef} />
         <DropzoneMarker name="EFKU" coords={[63.0105362, 27.7867077]} mapRef={mapRef} />
+
         <DropzoneMarker name="EFOU" coords={[64.9317604, 25.3780738]} mapRef={mapRef} />
+        {accurateView && (
+          <>
+            <Marker
+              coordinate={{ latitude: 64.93299569538941, longitude: 25.373695204985115 }}
+              image={WindsockIconSrc}
+            />
+            <Marker coordinate={{ latitude: 64.932977704781, longitude: 25.376731934213765 }} image={GoalIconSrc} />
+            <Marker coordinate={{ latitude: 64.93709880035112, longitude: 25.381220522989384 }} image={FarmIconSrc} />
+            <Marker coordinate={{ latitude: 64.93439958346372, longitude: 25.37485670160321 }} image={ErrorIconSrc} />
+            <Marker coordinate={{ latitude: 64.9316573755779, longitude: 25.37248672542712 }} image={NoEntryIconSrc} />
+            <Marker
+              coordinate={{ latitude: 64.92935598793248, longitude: 25.357204630687804 }}
+              image={NoEntryIconSrc}
+            />
+            <Marker
+              coordinate={{ latitude: 64.93264749946192, longitude: 25.370671648026594 }}
+              image={AirplaneIconSrc}
+            />
+            <Marker coordinate={{ latitude: 64.93478402201814, longitude: 25.40226973380438 }} image={BeerIconSrc} />
+            <Geojson geojson={coerceGeojson(EfouGeoJson)} />
+          </>
+        )}
 
         <DropzoneMarker name="EFKE" coords={[65.7775386, 24.5719851]} mapRef={mapRef} />
         {accurateView && (
