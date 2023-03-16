@@ -5,13 +5,13 @@ import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-n
 import Text from '../components/atoms/Text';
 import AltitudeMeter from '../components/AltitudeMeter';
 
-import WindsockIconSrc from '../assets/icons/icons8-windsock-96.png';
-import GoalIconSrc from '../assets/icons/icons8-goal-96.png';
-import NoEntryIconSrc from '../assets/icons/icons8-no-entry-96.png';
+import WindsockIconSrc from '../assets/icons/icons8-windsock-100.png';
+import GoalIconSrc from '../assets/icons/icons8-goal-100.png';
+import NoEntryIconSrc from '../assets/icons/icons8-no-entry-100.png';
 import RucksackIconSrc from '../assets/icons/icons8-rucksack-96.png';
-import CarrotIconSrc from '../assets/icons/icons8-carrot-96.png';
-import BeerIconSrc from '../assets/icons/icons8-beer-96.png';
-import TakeoffIconSrc from '../assets/icons/icons8-airplane-take-off-96.png';
+import CarrotIconSrc from '../assets/icons/icons8-carrot-100.png';
+import BeerIconSrc from '../assets/icons/icons8-beer-100.png';
+import AirplaneIconSrc from '../assets/icons/icons8-airplane-100.png';
 
 import EfutGeoJson from '../assets/geojson/efut.json';
 import EfkeGeoJson from '../assets/geojson/efke.json';
@@ -59,7 +59,7 @@ export default function MapScreen() {
             <Marker coordinate={{ latitude: 60.8928867, longitude: 26.925906 }} image={NoEntryIconSrc} />
             <Marker coordinate={{ latitude: 60.8950937, longitude: 26.9532117 }} image={NoEntryIconSrc} />
             <Marker coordinate={{ latitude: 60.8979303, longitude: 26.9201116 }} image={RucksackIconSrc} />
-            <Marker coordinate={{ latitude: 60.8969242, longitude: 26.9193471 }} image={TakeoffIconSrc} />
+            <Marker coordinate={{ latitude: 60.8969242, longitude: 26.9193471 }} image={AirplaneIconSrc} />
             <Marker coordinate={{ latitude: 60.8938573, longitude: 26.9104967 }} image={BeerIconSrc} />
             <Marker coordinate={{ latitude: 60.871943, longitude: 26.655462644 }} image={BeerIconSrc} />
             <Marker coordinate={{ latitude: 60.876198, longitude: 26.65180349 }} image={BeerIconSrc} />
