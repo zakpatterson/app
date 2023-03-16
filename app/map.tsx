@@ -1,6 +1,9 @@
-import React, { RefObject, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text as DefaultText } from 'react-native';
-import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
+import MapView, { Geojson, Marker, Region, Details } from 'react-native-maps';
+import { Polygon, Feature, point } from '@turf/helpers';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import bboxPolygon from '@turf/bbox-polygon';
 
 import { MapPlaceInfo, mapPlaces, markerIcon } from '../helpers/map_data';
 import AltitudeMeter from '../components/AltitudeMeter';
@@ -8,23 +11,56 @@ import AltitudeMeter from '../components/AltitudeMeter';
 import HouseIconSrc from '../assets/icons/icons8-house-100.png';
 import FanHeadIconSrc from '../assets/icons/icons8-fan-head-100.png';
 
+interface MapCamera {
+  altitude: number;
+  boundingBox: Feature<Polygon>;
+  time: number;
+}
+
 export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
-  const [altitude, setAltitude] = useState(1_000);
+
+  const [placesInsideCamera, setPlacesInsideCamera] = useState<string[]>([]);
+
+  const [camera, setCamera] = useState<MapCamera>({
+    altitude: 10_000,
+    boundingBox: bboxPolygon([29.5787, 66.3464, 21.0186, 59.2126]),
+    time: Date.now(),
+  });
+
+  useEffect(() => {
+    const placesInsideCamera = mapPlaces
+      .filter((place) => {
+        return booleanPointInPolygon(point([place.coords[1], place.coords[0]]), camera.boundingBox);
+      })
+      .map((place) => place.name);
+
+    setPlacesInsideCamera(placesInsideCamera);
+  }, [camera.time]);
 
   const onPanDrag = async (region: Region, details: Details) => {
-    const camera = await mapRef.current?.getCamera();
-
-    if (!camera) {
+    if (!mapRef.current) {
       return;
     }
 
+    const camera = await mapRef.current.getCamera();
+    const bounds = await mapRef.current.getMapBoundaries();
+
     const altitude = camera.altitude ?? gMapsZoomLevelToAltitude(camera.zoom!);
 
-    setAltitude(altitude);
+    setCamera({
+      altitude,
+      boundingBox: bboxPolygon([
+        bounds.southWest.longitude,
+        bounds.southWest.latitude,
+        bounds.northEast.longitude,
+        bounds.northEast.latitude,
+      ]),
+      time: Date.now(),
+    });
   };
 
-  const accurateView = altitude <= 50_000;
+  const accurateView = camera.altitude <= 50_000;
 
   return (
     <View style={styles.root}>
@@ -36,13 +72,13 @@ export default function MapScreen() {
         onRegionChange={onPanDrag}
       >
         {mapPlaces.map((place) => (
-          <MapPlace key={place.name} place={place} altitude={altitude} mapRef={mapRef} />
+          <MapPlace key={place.name} place={place} camera={camera} mapRef={mapRef} />
         ))}
       </MapView>
 
-      {altitude < 10_000 && <AltitudeMeter altitude={altitude} />}
+      {camera.altitude < 10_000 && <AltitudeMeter altitude={camera.altitude} />}
 
-      {!accurateView && (
+      {!accurateView && placesInsideCamera.length > 0 && (
         <View style={styles.overlayInstructionContainer}>
           <DefaultText style={styles.overlayInstruction}>Napauta kohdetta pikasiirtyäksesi</DefaultText>
         </View>
@@ -52,7 +88,7 @@ export default function MapScreen() {
 }
 
 interface MapPlaceProps {
-  altitude: number;
+  camera: MapCamera;
   place: MapPlaceInfo;
   mapRef: RefObject<MapView>;
 }
@@ -94,7 +130,7 @@ function MapPlace(props: MapPlaceProps) {
   return (
     <>
       {placeMarker}
-      {props.altitude < 5_000 && markers}
+      {props.camera.altitude < 10_000 && markers}
       {geojsons}
     </>
   );
@@ -113,7 +149,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 100,
+    bottom: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
