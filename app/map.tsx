@@ -19,6 +19,7 @@ import FarmIconSrc from '../assets/icons/icons8-farm-2-100.png';
 
 import EfutGeoJson from '../assets/geojson/efut.json';
 import EfkeGeoJson from '../assets/geojson/efke.json';
+import EflaGeoJson from '../assets/geojson/efla.json';
 
 function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
   return data as GeojsonProps['geojson'];
@@ -77,6 +78,21 @@ export default function MapScreen() {
         )}
 
         <DropzoneMarker name="EFLA" coords={[61.1491239, 25.6875153]} mapRef={mapRef} />
+        {accurateView && (
+          <>
+            <Marker
+              coordinate={{ latitude: 61.14901234130722, longitude: 25.68817925758734 }}
+              image={RucksackIconSrc}
+            />
+            <Marker
+              coordinate={{ latitude: 61.14466964965001, longitude: 25.68880052942565 }}
+              image={AirplaneIconSrc}
+            />
+            <Marker coordinate={{ latitude: 61.14448695882361, longitude: 25.69441911089014 }} image={NoEntryIconSrc} />
+            <Geojson geojson={coerceGeojson(EflaGeoJson)} />
+          </>
+        )}
+
         <DropzoneMarker name="EFTU" coords={[60.5087954, 22.2636276]} mapRef={mapRef} />
         <DropzoneMarker name="EFIM" coords={[61.2482849, 28.8954431]} mapRef={mapRef} />
         <DropzoneMarker name="EFJM" coords={[61.7806924, 22.7219118]} mapRef={mapRef} />
