@@ -12,6 +12,7 @@ import RucksackIconSrc from '../assets/icons/icons8-rucksack-96.png';
 import CarrotIconSrc from '../assets/icons/icons8-carrot-100.png';
 import BeerIconSrc from '../assets/icons/icons8-beer-100.png';
 import AirplaneIconSrc from '../assets/icons/icons8-airplane-100.png';
+import FastForwardIconSrc from '../assets/icons/icons8-fast-forward-100.png';
 
 import EfutGeoJson from '../assets/geojson/efut.json';
 import EfkeGeoJson from '../assets/geojson/efke.json';
@@ -19,10 +20,6 @@ import EfkeGeoJson from '../assets/geojson/efke.json';
 function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
   return data as GeojsonProps['geojson'];
 }
-
-const YELLOW_ALTITUDE = 1219; // 4000 ft
-const ORANGE_ALTITUDE = 1067; // 3500 ft
-const RED_ALTITUDE = 762; // 2500 ft
 
 export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
@@ -63,7 +60,8 @@ export default function MapScreen() {
             <Marker coordinate={{ latitude: 60.8938573, longitude: 26.9104967 }} image={BeerIconSrc} />
             <Marker coordinate={{ latitude: 60.871943, longitude: 26.655462644 }} image={BeerIconSrc} />
             <Marker coordinate={{ latitude: 60.876198, longitude: 26.65180349 }} image={BeerIconSrc} />
-            <Geojson geojson={coerceGeojson(EfutGeoJson)} fillColor="rgba(128,0,0,0.25)" strokeColor="red" />
+            <Marker coordinate={{ latitude: 60.896891, longitude: 26.921197977 }} image={FastForwardIconSrc} />
+            <Geojson geojson={coerceGeojson(EfutGeoJson)} />
           </>
         )}
 
