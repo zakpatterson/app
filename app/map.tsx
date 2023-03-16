@@ -5,6 +5,7 @@ import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-n
 import AltitudeMeter from '../components/AltitudeMeter';
 
 import HouseIconSrc from '../assets/icons/icons8-house-100.png';
+import FanHeadIconSrc from '../assets/icons/icons8-fan-head-100.png';
 import WindsockIconSrc from '../assets/icons/icons8-windsock-100.png';
 import GoalIconSrc from '../assets/icons/icons8-goal-100.png';
 import NoEntryIconSrc from '../assets/icons/icons8-no-entry-100.png';
@@ -50,6 +51,14 @@ export default function MapScreen() {
         showsPointsOfInterest={false}
         onRegionChange={onPanDrag}
       >
+        <DropzoneMarker name="Fööni" coords={[60.1876105861579, 24.97816832615967]} mapRef={mapRef} type="tunnel" />
+        <DropzoneMarker
+          name="Aeronautica Arena"
+          coords={[60.48801792405424, 26.554819847791503]}
+          mapRef={mapRef}
+          type="tunnel"
+        />
+
         <DropzoneMarker name="EFUT" coords={[60.8977697, 26.9193624]} mapRef={mapRef} />
         {accurateView && (
           <>
@@ -95,6 +104,7 @@ export default function MapScreen() {
 }
 
 interface DropzoneMarkerProps {
+  type?: 'tunnel';
   coords: [number, number];
   name: string;
   mapRef: RefObject<MapView>;
@@ -103,7 +113,7 @@ interface DropzoneMarkerProps {
 function DropzoneMarker(props: DropzoneMarkerProps) {
   return (
     <Marker
-      image={HouseIconSrc}
+      image={props.type === 'tunnel' ? FanHeadIconSrc : HouseIconSrc}
       coordinate={{ latitude: props.coords[0], longitude: props.coords[1] }}
       onPress={() =>
         props.mapRef.current?.animateCamera({

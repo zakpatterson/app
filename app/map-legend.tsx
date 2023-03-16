@@ -3,6 +3,7 @@ import { Image, ImageSourcePropType, ScrollView, StyleSheet, View } from 'react-
 import Text from '../components/atoms/Text';
 
 import HouseIconSrc from '../assets/icons/icons8-house-100.png';
+import FanHeadIconSrc from '../assets/icons/icons8-fan-head-100.png';
 import WindsockIconSrc from '../assets/icons/icons8-windsock-100.png';
 import GoalIconSrc from '../assets/icons/icons8-goal-100.png';
 import NoEntryIconSrc from '../assets/icons/icons8-no-entry-100.png';
@@ -18,7 +19,8 @@ export default function MapLegendScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <LegendRow title="Kerhorakennus" icon={HouseIconSrc} />
+        <LegendRow title="Hyppykerho" icon={HouseIconSrc} />
+        <LegendRow title="Tuulitunneli" icon={FanHeadIconSrc} />
         <LegendRow title="Tuulipussi" icon={WindsockIconSrc} />
         <LegendRow title="Laskeutumisalue" icon={GoalIconSrc} />
         <LegendRow title="Oppilaiden laskeutumisalue" icon={CarrotIconSrc} />
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     gap: 16,
+    paddingBottom: 128,
   },
   legendRow: {
     flexDirection: 'row',
