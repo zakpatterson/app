@@ -2,29 +2,11 @@ import React, { RefObject, useRef, useState } from 'react';
 import { StyleSheet, View, Text as DefaultText } from 'react-native';
 import MapView, { Geojson, Marker, GeojsonProps, Region, Details } from 'react-native-maps';
 
+import { MapPlaceInfo, mapPlaces, markerIcon } from '../helpers/map_data';
 import AltitudeMeter from '../components/AltitudeMeter';
 
 import HouseIconSrc from '../assets/icons/icons8-house-100.png';
 import FanHeadIconSrc from '../assets/icons/icons8-fan-head-100.png';
-import WindsockIconSrc from '../assets/icons/icons8-windsock-100.png';
-import GoalIconSrc from '../assets/icons/icons8-goal-100.png';
-import NoEntryIconSrc from '../assets/icons/icons8-no-entry-100.png';
-import RucksackIconSrc from '../assets/icons/icons8-rucksack-100.png';
-import CarrotIconSrc from '../assets/icons/icons8-carrot-100.png';
-import BeerIconSrc from '../assets/icons/icons8-beer-100.png';
-import AirplaneIconSrc from '../assets/icons/icons8-airplane-100.png';
-import FastForwardIconSrc from '../assets/icons/icons8-fast-forward-100.png';
-import ErrorIconSrc from '../assets/icons/icons8-error-100.png';
-import FarmIconSrc from '../assets/icons/icons8-farm-2-100.png';
-
-import EfutGeoJson from '../assets/geojson/efut.json';
-import EfkeGeoJson from '../assets/geojson/efke.json';
-import EflaGeoJson from '../assets/geojson/efla.json';
-import EfouGeoJson from '../assets/geojson/efou.json';
-
-function coerceGeojson(data: unknown): GeojsonProps['geojson'] {
-  return data as GeojsonProps['geojson'];
-}
 
 export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
@@ -53,92 +35,13 @@ export default function MapScreen() {
         showsPointsOfInterest={false}
         onRegionChange={onPanDrag}
       >
-        <DropzoneMarker name="Fööni" coords={[60.1876105861579, 24.97816832615967]} mapRef={mapRef} type="tunnel" />
-        <DropzoneMarker
-          name="Aeronautica Arena"
-          coords={[60.48801792405424, 26.554819847791503]}
-          mapRef={mapRef}
-          type="tunnel"
-        />
-
-        <DropzoneMarker name="EFUT" coords={[60.8977697, 26.9193624]} mapRef={mapRef} />
-        {accurateView && (
-          <>
-            <Marker coordinate={{ latitude: 60.8962929, longitude: 26.9256754 }} image={WindsockIconSrc} />
-            <Marker coordinate={{ latitude: 60.897627, longitude: 26.926096 }} image={GoalIconSrc} />
-            <Marker coordinate={{ latitude: 60.8928867, longitude: 26.925906 }} image={NoEntryIconSrc} />
-            <Marker coordinate={{ latitude: 60.8950937, longitude: 26.9532117 }} image={NoEntryIconSrc} />
-            <Marker coordinate={{ latitude: 60.8979303, longitude: 26.9201116 }} image={RucksackIconSrc} />
-            <Marker coordinate={{ latitude: 60.8969242, longitude: 26.9193471 }} image={AirplaneIconSrc} />
-            <Marker coordinate={{ latitude: 60.8938573, longitude: 26.9104967 }} image={BeerIconSrc} />
-            <Marker coordinate={{ latitude: 60.871943, longitude: 26.655462644 }} image={BeerIconSrc} />
-            <Marker coordinate={{ latitude: 60.876198, longitude: 26.65180349 }} image={BeerIconSrc} />
-            <Marker coordinate={{ latitude: 60.896891, longitude: 26.921197977 }} image={FastForwardIconSrc} />
-            <Geojson geojson={coerceGeojson(EfutGeoJson)} />
-          </>
-        )}
-
-        <DropzoneMarker name="EFLA" coords={[61.1491239, 25.6875153]} mapRef={mapRef} />
-        {accurateView && (
-          <>
-            <Marker
-              coordinate={{ latitude: 61.14901234130722, longitude: 25.68817925758734 }}
-              image={RucksackIconSrc}
-            />
-            <Marker
-              coordinate={{ latitude: 61.14466964965001, longitude: 25.68880052942565 }}
-              image={AirplaneIconSrc}
-            />
-            <Marker coordinate={{ latitude: 61.14448695882361, longitude: 25.69441911089014 }} image={NoEntryIconSrc} />
-            <Geojson geojson={coerceGeojson(EflaGeoJson)} />
-          </>
-        )}
-
-        <DropzoneMarker name="EFTU" coords={[60.5087954, 22.2636276]} mapRef={mapRef} />
-        <DropzoneMarker name="EFIM" coords={[61.2482849, 28.8954431]} mapRef={mapRef} />
-        <DropzoneMarker name="EFJM" coords={[61.7806924, 22.7219118]} mapRef={mapRef} />
-        <DropzoneMarker name="EFPO" coords={[61.4627744, 21.8049771]} mapRef={mapRef} />
-        <DropzoneMarker name="EFVA" coords={[63.0345426, 21.7414303]} mapRef={mapRef} />
-        <DropzoneMarker name="EFAL" coords={[62.5549554, 23.5641548]} mapRef={mapRef} />
-        <DropzoneMarker name="EFJY" coords={[62.4090321, 25.6708152]} mapRef={mapRef} />
-        <DropzoneMarker name="EFKU" coords={[63.0105362, 27.7867077]} mapRef={mapRef} />
-
-        <DropzoneMarker name="EFOU" coords={[64.9317604, 25.3780738]} mapRef={mapRef} />
-        {accurateView && (
-          <>
-            <Marker
-              coordinate={{ latitude: 64.93299569538941, longitude: 25.373695204985115 }}
-              image={WindsockIconSrc}
-            />
-            <Marker coordinate={{ latitude: 64.932977704781, longitude: 25.376731934213765 }} image={GoalIconSrc} />
-            <Marker coordinate={{ latitude: 64.93709880035112, longitude: 25.381220522989384 }} image={FarmIconSrc} />
-            <Marker coordinate={{ latitude: 64.93439958346372, longitude: 25.37485670160321 }} image={ErrorIconSrc} />
-            <Marker coordinate={{ latitude: 64.9316573755779, longitude: 25.37248672542712 }} image={NoEntryIconSrc} />
-            <Marker
-              coordinate={{ latitude: 64.92935598793248, longitude: 25.357204630687804 }}
-              image={NoEntryIconSrc}
-            />
-            <Marker
-              coordinate={{ latitude: 64.93264749946192, longitude: 25.370671648026594 }}
-              image={AirplaneIconSrc}
-            />
-            <Marker coordinate={{ latitude: 64.93478402201814, longitude: 25.40226973380438 }} image={BeerIconSrc} />
-            <Geojson geojson={coerceGeojson(EfouGeoJson)} />
-          </>
-        )}
-
-        <DropzoneMarker name="EFKE" coords={[65.7775386, 24.5719851]} mapRef={mapRef} />
-        {accurateView && (
-          <>
-            <Marker coordinate={{ latitude: 65.779219, longitude: 24.570833 }} image={WindsockIconSrc} />
-            <Marker coordinate={{ latitude: 65.776947, longitude: 24.57789 }} image={CarrotIconSrc} />
-            <Marker coordinate={{ latitude: 65.794502, longitude: 24.5258638 }} image={BeerIconSrc} />
-            <Marker coordinate={{ latitude: 65.742791, longitude: 24.5789721 }} image={BeerIconSrc} />
-            <Geojson geojson={coerceGeojson(EfkeGeoJson)} />
-          </>
-        )}
+        {mapPlaces.map((place) => (
+          <MapPlace key={place.name} place={place} altitude={altitude} mapRef={mapRef} />
+        ))}
       </MapView>
+
       {altitude < 10_000 && <AltitudeMeter altitude={altitude} />}
+
       {!accurateView && (
         <View style={styles.overlayInstructionContainer}>
           <DefaultText style={styles.overlayInstruction}>Napauta kohdetta pikasiirtyäksesi</DefaultText>
@@ -148,18 +51,19 @@ export default function MapScreen() {
   );
 }
 
-interface DropzoneMarkerProps {
-  type?: 'tunnel';
-  coords: [number, number];
-  name: string;
+interface MapPlaceProps {
+  altitude: number;
+  place: MapPlaceInfo;
   mapRef: RefObject<MapView>;
 }
 
-function DropzoneMarker(props: DropzoneMarkerProps) {
-  return (
+function MapPlace(props: MapPlaceProps) {
+  const { place } = props;
+
+  const placeMarker = (
     <Marker
-      image={props.type === 'tunnel' ? FanHeadIconSrc : HouseIconSrc}
-      coordinate={{ latitude: props.coords[0], longitude: props.coords[1] }}
+      image={place.type === 'tunnel' ? FanHeadIconSrc : HouseIconSrc}
+      coordinate={{ latitude: place.coords[0], longitude: place.coords[1] }}
       onPress={() =>
         props.mapRef.current?.animateCamera({
           altitude: 5_000,
@@ -167,12 +71,32 @@ function DropzoneMarker(props: DropzoneMarkerProps) {
           pitch: 0,
           zoom: 15,
           center: {
-            latitude: props.coords[0],
-            longitude: props.coords[1],
+            latitude: place.coords[0],
+            longitude: place.coords[1],
           },
         })
       }
     />
+  );
+
+  const markers = place.markers.map((marker, i) => {
+    return (
+      <Marker
+        key={i}
+        coordinate={{ latitude: marker.coords[0], longitude: marker.coords[1] }}
+        image={markerIcon[marker.type]}
+      />
+    );
+  });
+
+  const geojsons = place.geojsons.map((geojson, i) => <Geojson key={i} geojson={geojson} />);
+
+  return (
+    <>
+      {placeMarker}
+      {props.altitude < 5_000 && markers}
+      {geojsons}
+    </>
   );
 }
 

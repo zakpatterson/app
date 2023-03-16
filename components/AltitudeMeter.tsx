@@ -10,7 +10,7 @@ interface Props {
 
 export default function AltitudeMeter(props: Props) {
   return (
-    <Svg style={{ position: 'absolute', bottom: 16, right: 16, height: 96, width: 96 }} viewBox="0 0 100 100">
+    <Svg style={{ position: 'absolute', top: 16, left: 16, height: 96, width: 96 }} viewBox="0 0 100 100">
       <Circle fill="#FFF" x="50" y="50" r="50" />
       <Image href={AltitrackImgSrc} height={100} width={100} x={0} y={0} />
 
