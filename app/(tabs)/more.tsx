@@ -1,5 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 
+import { config } from '../../helpers/config';
+
+import Text from '../../components/atoms/Text';
 import MenuGroup from '../../components/atoms/MenuGroup';
 import MenuItem from '../../components/atoms/MenuItem';
 
@@ -14,6 +17,7 @@ export default function TabEventCalendar() {
       <MenuGroup>
         <MenuItem left="Kirjaudu ulos" href="/auth" />
       </MenuGroup>
+      <Text>{JSON.stringify(config, null, 2)}</Text>
     </View>
   );
 }
