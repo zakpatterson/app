@@ -1,6 +1,7 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text as DefaultText } from 'react-native';
 import MapView, { Geojson, Marker, Region, Details } from 'react-native-maps';
+import { useNavigation } from 'expo-router';
 import { Polygon, Feature, point } from '@turf/helpers';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -18,6 +19,7 @@ interface MapCamera {
 }
 
 export default function MapScreen() {
+  const navigation = useNavigation();
   const mapRef = useRef<MapView>(null);
 
   const [placesInsideCamera, setPlacesInsideCamera] = useState<string[]>([]);
@@ -34,6 +36,10 @@ export default function MapScreen() {
         return booleanPointInPolygon(point([place.coords[1], place.coords[0]]), camera.boundingBox);
       })
       .map((place) => place.name);
+
+    navigation.setOptions({
+      title: placesInsideCamera.length === 1 ? placesInsideCamera[0] : 'Kartta',
+    });
 
     setPlacesInsideCamera(placesInsideCamera);
   }, [camera.time]);
@@ -81,12 +87,6 @@ export default function MapScreen() {
       {!accurateView && placesInsideCamera.length > 0 && (
         <View style={styles.overlayInstructionContainer}>
           <DefaultText style={styles.overlayInstruction}>Napauta kohdetta pikasiirtyäksesi</DefaultText>
-        </View>
-      )}
-
-      {accurateView && placesInsideCamera.length === 1 && (
-        <View style={styles.cardContainer}>
-          <DefaultText style={styles.cardText}>{placesInsideCamera[0]}</DefaultText>
         </View>
       )}
     </View>
@@ -166,17 +166,5 @@ const styles = StyleSheet.create({
     color: '#FFF',
     padding: 8,
     backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  cardContainer: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    position: 'absolute',
-    right: 16,
-    padding: 16,
-    top: 16,
-    borderRadius: 32,
-  },
-  cardText: {
-    fontSize: 16,
-    color: '#FFF',
   },
 });
