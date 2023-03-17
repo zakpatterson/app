@@ -36,6 +36,7 @@ export type MapPlaceInfo = {
 export type MapMarker = {
   type: MapMarkerType;
   coords: [number, number];
+  title?: string;
 };
 
 export const markerIcon: Record<MapMarkerType, ImageRequireSource> = {
@@ -145,8 +146,57 @@ export const mapPlaces: MapPlaceInfo[] = [
     type: 'dz',
     name: 'EFPO',
     coords: [61.4627744, 21.8049771],
-    markers: [],
-    geojsons: [],
+    markers: [
+      {
+        type: 'danger',
+        coords: [61.432507787795416, 21.86293080025661],
+        title: 'Valtatie, sähköistetty rautatie',
+      },
+      {
+        type: 'danger',
+        coords: [61.44397042350591, 21.842371022616064],
+        title: 'Valtatie, sähköistetty rautatie',
+      },
+      {
+        type: 'danger',
+        coords: [61.460673604718636, 21.8140971269465],
+        title: 'Valtatie, sähköistetty rautatie',
+      },
+      {
+        type: 'danger',
+        coords: [61.47605801201885, 21.786924418227535],
+        title: 'Valtatie, sähköistetty rautatie',
+      },
+      {
+        type: 'danger',
+        coords: [61.478863783779246, 21.761169980958066],
+        title: 'Valtatie',
+      },
+      {
+        type: 'danger',
+        coords: [61.45207710863084, 21.78066309892029],
+        title: 'Ampuma-alue',
+      },
+      {
+        type: 'danger',
+        coords: [61.4636461276479, 21.75576366943533],
+        title: 'Valtatie',
+      },
+      {
+        type: 'danger',
+        coords: [61.43931394313817, 21.741195841848352],
+        title: 'Valtatie',
+      },
+      {
+        type: 'altTarget',
+        coords: [61.44030540660446, 21.76400898518329],
+      },
+      {
+        type: 'altTarget',
+        coords: [61.4326045006463, 21.82693426175229],
+      },
+    ],
+    geojsons: [require('../assets/geojson/efpo.json')],
   },
   {
     type: 'dz',
