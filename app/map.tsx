@@ -83,6 +83,12 @@ export default function MapScreen() {
           <DefaultText style={styles.overlayInstruction}>Napauta kohdetta pikasiirtyäksesi</DefaultText>
         </View>
       )}
+
+      {accurateView && placesInsideCamera.length === 1 && (
+        <View style={styles.cardContainer}>
+          <DefaultText style={styles.cardText}>{placesInsideCamera[0]}</DefaultText>
+        </View>
+      )}
     </View>
   );
 }
@@ -120,6 +126,7 @@ function MapPlace(props: MapPlaceProps) {
       <Marker
         key={i}
         coordinate={{ latitude: marker.coords[0], longitude: marker.coords[1] }}
+        title={marker.title}
         image={markerIcon[marker.type]}
       />
     );
@@ -130,7 +137,7 @@ function MapPlace(props: MapPlaceProps) {
   return (
     <>
       {placeMarker}
-      {props.camera.altitude < 10_000 && markers}
+      {props.camera.altitude < 50_000 && markers}
       {geojsons}
     </>
   );
@@ -149,7 +156,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 100,
+    bottom: 75,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -159,5 +166,17 @@ const styles = StyleSheet.create({
     color: '#FFF',
     padding: 8,
     backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  cardContainer: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    position: 'absolute',
+    right: 16,
+    padding: 16,
+    top: 16,
+    borderRadius: 32,
+  },
+  cardText: {
+    fontSize: 16,
+    color: '#FFF',
   },
 });
