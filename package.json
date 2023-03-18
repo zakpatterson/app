@@ -15,6 +15,7 @@
     "@apollo/client": "^3.7.10",
     "@expo/vector-icons": "^13.0.0",
     "@miblanchard/react-native-slider": "^2.3.1",
+    "@react-native-async-storage/async-storage": "1.17.11",
     "@react-navigation/native": "^6.0.2",
     "@turf/bbox-polygon": "^6.5.0",
     "@turf/boolean-point-in-polygon": "^6.5.0",

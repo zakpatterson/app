@@ -30,7 +30,7 @@ export default function MenuItem(props: Props) {
     >
       <Pressable
         disabled={!isPressable}
-        onPress={() => props.href && router.push(props.href)}
+        onPress={() => (props.href ? router.push(props.href) : props.onPress?.())}
         style={({ pressed }) => [
           styles.pressable,
           props.type === 'input' && styles.withInput,
