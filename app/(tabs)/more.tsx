@@ -19,7 +19,7 @@ export default function TabEventCalendar() {
         </MenuGroup>
       ) : (
         <MenuGroup>
-          <MenuItem left="Kirjaudu sisään" onPress={() => refreshAccessToken('foobar')} />
+          <MenuItem left="Kirjaudu sisään" href="/auth" />
         </MenuGroup>
       )}
 

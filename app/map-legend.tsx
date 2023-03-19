@@ -1,6 +1,6 @@
-import { Image, ImageSourcePropType, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import Text from '../components/atoms/Text';
+import LegendRow from '../components/atoms/LegendRow';
 
 import HouseIconSrc from '../assets/icons/icons8-house-100.png';
 import FanHeadIconSrc from '../assets/icons/icons8-fan-head-100.png';
@@ -41,30 +41,11 @@ export default function MapLegendScreen() {
   );
 }
 
-interface RowProps {
-  icon: ImageSourcePropType;
-  title: string;
-}
-
-function LegendRow(props: RowProps) {
-  return (
-    <View style={styles.legendRow}>
-      <Image source={props.icon} style={{ height: 50, width: 50 }} />
-      <Text style={{ flex: 1 }}>{props.title}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
     gap: 16,
     paddingBottom: 128,
-  },
-  legendRow: {
-    flexDirection: 'row',
-    gap: 16,
-    alignItems: 'center',
   },
 });

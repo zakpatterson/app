@@ -52,8 +52,8 @@ function RootLayoutNav() {
           <Stack.Screen
             name="auth"
             options={{
-              presentation: 'fullScreenModal',
               headerShown: false,
+              animation: 'fade_from_bottom',
             }}
           />
 

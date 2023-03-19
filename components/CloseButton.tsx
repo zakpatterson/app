@@ -7,6 +7,7 @@ import Colors from '../constants/Colors';
 
 interface Props {
   raised?: boolean;
+  icon?: 'chevron-left' | 'x';
 }
 
 export default function CloseButton(props: Props) {
@@ -22,7 +23,7 @@ export default function CloseButton(props: Props) {
     <Pressable onPress={() => router.back()} style={[styles.root, props.raised && styles.raised]}>
       {({ pressed }) => (
         <FeatherIcons
-          name="chevron-left"
+          name={props.icon ?? 'chevron-left'}
           size={24}
           color={props.raised ? '#333' : Colors[colorScheme ?? 'light'].tint}
           style={{ opacity: pressed ? 0.5 : 1 }}
