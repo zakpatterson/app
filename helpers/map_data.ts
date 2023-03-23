@@ -27,6 +27,7 @@ export type MapMarkerType =
 
 export type MapPlaceInfo = {
   type: 'tunnel' | 'dz';
+  elev?: number;
   coords: [number, number];
   name: string;
   markers: MapMarker[];
@@ -71,6 +72,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFUT',
+    elev: 103,
     coords: [60.8977697, 26.9193624],
     markers: [
       {
@@ -112,6 +114,7 @@ export const mapPlaces: MapPlaceInfo[] = [
     type: 'dz',
     coords: [61.1491239, 25.6875153],
     name: 'EFLA',
+    elev: 153,
     markers: [
       {
         type: 'packingArea',
@@ -131,6 +134,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFTU',
+    elev: 49,
     coords: [60.5087954, 22.2636276],
     markers: [],
     geojsons: [],
@@ -138,6 +142,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFIM',
+    elev: 103,
     coords: [61.2482849, 28.8954431],
     markers: [],
     geojsons: [],
@@ -145,6 +150,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFPO',
+    elev: 14,
     coords: [61.4627744, 21.8049771],
     markers: [
       {
@@ -201,6 +207,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFJM',
+    elev: 154,
     coords: [61.7806924, 22.7219118],
     markers: [],
     geojsons: [],
@@ -208,6 +215,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFVA',
+    elev: 6,
     coords: [63.0345426, 21.7414303],
     markers: [],
     geojsons: [],
@@ -215,6 +223,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFAL',
+    elev: 124,
     coords: [62.5549554, 23.5641548],
     markers: [],
     geojsons: [],
@@ -222,6 +231,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFJY',
+    elev: 140,
     coords: [62.4090321, 25.6708152],
     markers: [],
     geojsons: [],
@@ -229,6 +239,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFKU',
+    elev: 99,
     coords: [63.0105362, 27.7867077],
     markers: [],
     geojsons: [],
@@ -236,6 +247,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFOU',
+    elev: 15,
     coords: [64.9317604, 25.3780738],
     markers: [
       {
@@ -276,6 +288,7 @@ export const mapPlaces: MapPlaceInfo[] = [
   {
     type: 'dz',
     name: 'EFKE',
+    elev: 19,
     coords: [65.7775386, 24.5719851],
     markers: [
       {

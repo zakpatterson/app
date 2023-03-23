@@ -22,7 +22,7 @@ export default function MapScreen() {
   const navigation = useNavigation();
   const mapRef = useRef<MapView>(null);
 
-  const [placesInsideCamera, setPlacesInsideCamera] = useState<string[]>([]);
+  const [placesInsideCamera, setPlacesInsideCamera] = useState<MapPlaceInfo[]>([]);
 
   const [camera, setCamera] = useState<MapCamera>({
     altitude: 10_000,
@@ -31,14 +31,23 @@ export default function MapScreen() {
   });
 
   useEffect(() => {
-    const placesInsideCamera = mapPlaces
-      .filter((place) => {
-        return booleanPointInPolygon(point([place.coords[1], place.coords[0]]), camera.boundingBox);
-      })
-      .map((place) => place.name);
+    const placesInsideCamera = mapPlaces.filter((place) => {
+      return booleanPointInPolygon(point([place.coords[1], place.coords[0]]), camera.boundingBox);
+    });
+
+    let title = 'Kartta';
+
+    if (placesInsideCamera.length === 1) {
+      const place = placesInsideCamera[0];
+      title = place.name;
+
+      if (place.elev !== undefined) {
+        title = `${place.name} (${place.elev}M AMSL)`;
+      }
+    }
 
     navigation.setOptions({
-      title: placesInsideCamera.length === 1 ? placesInsideCamera[0] : 'Kartta',
+      title,
     });
 
     setPlacesInsideCamera(placesInsideCamera);
