@@ -233,8 +233,17 @@ export const mapPlaces: MapPlaceInfo[] = [
     name: 'EFJY',
     elev: 140,
     coords: [62.4090321, 25.6708152],
-    markers: [],
-    geojsons: [],
+    markers: [
+      {
+        type: 'windsock',
+        coords: [62.40674769183672, 25.664948449021963],
+      },
+      {
+        type: 'target',
+        coords: [62.40720279133594, 25.66369006632768],
+      },
+    ],
+    geojsons: [require('../assets/geojson/efjy.json')],
   },
   {
     type: 'dz',
