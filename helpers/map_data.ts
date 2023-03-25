@@ -216,9 +216,9 @@ export const mapPlaces: MapPlaceInfo[] = [
     type: 'dz',
     name: 'EFVA',
     elev: 6,
-    coords: [63.0345426, 21.7414303],
+    coords: [63.04026809650351, 21.773224295363374],
     markers: [],
-    geojsons: [],
+    geojsons: [require('../assets/geojson/efva.json')],
   },
   {
     type: 'dz',
